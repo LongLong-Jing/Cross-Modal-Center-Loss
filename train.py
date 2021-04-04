@@ -204,7 +204,7 @@ if __name__ == "__main__":
     parser.add_argument('--per_print', type=int,  default=100,
                         help='how many iterations to print the loss and accuracy')
                         
-    parser.add_argument('--save', type=str,  default='./checkpoints/M40',
+    parser.add_argument('--save', type=str,  default='./checkpoints/ModelNet40',
                         help='path to save the final model')
 
     parser.add_argument('--gpu_id', type=str,  default='0,1,2,3',

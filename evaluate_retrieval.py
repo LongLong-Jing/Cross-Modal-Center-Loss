@@ -84,12 +84,12 @@ def extract(args):
         mesh_feat[iteration,:] = M_feat.data.cpu().numpy()
         label[iteration] = target.data.cpu().numpy()
         iteration = iteration + 1
-    np.save(args.save+'/img_feat_{}.np'.format(1),img_feat_1)    
-    np.save(args.save+'/img_feat_{}.np'.format(2),img_feat_2)    
-    np.save(args.save+'/img_feat_{}.np'.format(4),img_feat_4)    
-    np.save(args.save+'/pt_feat.np',pt_feat)    
-    np.save(args.save+'/mesh_feat.np',mesh_feat)    
-    np.save(args.save+'/label.np',label) 
+    np.save(args.save+'/img_feat_{}'.format(1),img_feat_1)    
+    np.save(args.save+'/img_feat_{}'.format(2),img_feat_2)    
+    np.save(args.save+'/img_feat_{}'.format(4),img_feat_4)    
+    np.save(args.save+'/pt_feat',pt_feat)    
+    np.save(args.save+'/mesh_feat',mesh_feat)    
+    np.save(args.save+'/label',label) 
 
 def fx_calc_map_label(view_1, view_2, label_test):
     dist = scipy.spatial.distance.cdist(view_1, view_2, 'cosine') #rows view_1 , columns view 2 
@@ -113,10 +113,10 @@ def fx_calc_map_label(view_1, view_2, label_test):
 
 def eval_func(img_pairs):
     print('number of img views: ',img_pairs)
-    img_feat = np.load(args.save+'/img_feat_{}.np.npy'.format(img_pairs))    
-    pt_feat = np.load(args.save+'/pt_feat.np.npy')    
-    mesh_feat = np.load(args.save+'/mesh_feat.np.npy')    
-    label = np.load(args.save+'/label.np.npy') 
+    img_feat = np.load(args.save+'/img_feat_{}.npy'.format(img_pairs))    
+    pt_feat = np.load(args.save+'/pt_feat.npy')    
+    mesh_feat = np.load(args.save+'/mesh_feat.npy')    
+    label = np.load(args.save+'/label.npy') 
     ########################################
     img_test = normalize(img_feat, norm='l1', axis=1)
     cloud_test = normalize(pt_feat, norm='l1', axis=1)
@@ -149,16 +149,16 @@ if __name__ == "__main__":
 
     parser.add_argument('--dataset', type=str, default='ModelNet40', metavar='dataset',help='ModelNet10 or ModelNet40')
                         
-    parser.add_argument('--dataset_dir', type=str, default='/media/super-server/32d81dc0-e480-40a0-9cc6-4a371fcd2824/CrossModalRetrieval/CrossModalRetrieval/dataset/',
+    parser.add_argument('--dataset_dir', type=str, default='./dataset/',
     metavar='dataset_dir',help='dataset_dir')
 
-    parser.add_argument('--model_folder', type=str,  default='M40',help='path to load model')
+    parser.add_argument('--model_folder', type=str,  default='ModelNet40',help='path to load model')
                         
     parser.add_argument('--iterations', type=int,  default=55000,help='iteration to load the model')
 
     parser.add_argument('--gpu_id', type=str,  default='0,1,2,3',help='GPU used to train the network')
                                                 
-    parser.add_argument('--save', type=str,  default='extracted_features/M40',help='save features')
+    parser.add_argument('--save', type=str,  default='extracted_features/ModelNet40',help='save features')
                         
 
     args = parser.parse_args()
